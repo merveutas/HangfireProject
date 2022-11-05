@@ -20,5 +20,6 @@ namespace ScheduleControl.DataAccess.Concrete.EntityFramework.Context
 
         public DbSet<DevApp> DevApp { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Log> Logs { get; set; }
     }
 }

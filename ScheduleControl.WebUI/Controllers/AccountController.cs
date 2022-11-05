@@ -1,7 +1,6 @@
 ﻿using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using NLog;
 using ScheduleControl.BackgroundJob.Schedules;
 using ScheduleControl.Business.Abstract.Auth;
 using ScheduleControl.Entities.Dtos.Account;
@@ -15,11 +14,11 @@ namespace ScheduleControl.WebUI.Controllers
     public class AccountController : Controller
     {
         private readonly IAuthService _authService;
-        Logger logger = LogManager.GetCurrentClassLogger();
-
-        public AccountController(IAuthService authService)
+        private readonly ILogger<AccountController> _logger;    
+        public AccountController(IAuthService authService, ILogger<AccountController> logger)
         {
             _authService = authService;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -40,7 +39,7 @@ namespace ScheduleControl.WebUI.Controllers
         {
             var user = _authService.Register(authViewModel.UserForRegisterDto);
             DelayedJobs.SendMailRegisterJobs(user.UserId);
-            logger.Info("Register başarılı.");
+            _logger.LogError("Register başarılı.");
 
             return RedirectToAction("Index", "Home");
         }
@@ -56,7 +55,7 @@ namespace ScheduleControl.WebUI.Controllers
         public IActionResult Login(AuthViewModel authViewModel)
         {
             var user = _authService.Login(authViewModel.UserForLoginDto);
-            logger.Info("Login başarılı.");
+            _logger.LogError("Login başarılı.");
             return RedirectToAction("Index", "Home");
         }
 
@@ -65,12 +64,12 @@ namespace ScheduleControl.WebUI.Controllers
         {
             if (string.IsNullOrEmpty(reqUrl))
             {
-                logger.Error("UserRegisterCheck başarısız.");
+                _logger.LogError("UserRegisterCheck başarısız.");
                 return RedirectToAction("Error", "Home");
             }
 
             _authService.UserActivatedRegister(reqUrl);
-            logger.Info("UserRegisterCheck başarılı.");
+            _logger.LogError("UserRegisterCheck başarılı.");
 
             return RedirectToAction("Index", "Home");
         }

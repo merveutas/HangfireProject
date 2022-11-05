@@ -1,4 +1,5 @@
 ﻿using Hangfire;
+using Hangfire.Common;
 using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -69,7 +70,8 @@ namespace ScheduleControl.WebUI
 
             services.AddScoped<IAuthService, AuthManager>();
             services.AddScoped<IMailService, MailManager>();
-           
+
+            
             // configuration configure options
             services.Configure<SmtpConfigDto>(Configuration.GetSection("SmtpConfig"));
           
@@ -130,7 +132,7 @@ namespace ScheduleControl.WebUI
             RecurringJobs.AppListenCheckOperation();  //istek atma
             RecurringJobs.AppStatusCheckOperation();  //mail gönderme
 
-
+            
         }
     }
 }
