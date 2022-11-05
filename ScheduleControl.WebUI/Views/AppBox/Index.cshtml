@@ -1,0 +1,27 @@
+﻿@model List<ScheduleControl.Entities.Models.DevApp>
+
+<table>
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Url</td>
+            <td>Status</td>
+            <td>İşlem</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Url</td>
+                <td>@item.Status</td>
+                <td>
+                    <button>Ekle</button> &nbsp; | &nbsp;
+                    <button>Sil</button> &nbsp; | &nbsp;
+                    <button>Güncelle</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
