@@ -12,15 +12,16 @@ namespace ScheduleControl.Business.Abstract
         void Insert(DevApp devApp);
 
         void Update(DevApp devApp);
+        bool Delete(DevApp devApp);
 
         List<DevApp> GetAllDevApp();
 
-       List<DevApp> GetDevAppCheck();
+        List<DevApp> GetDevAppCheck();
 
         List<DevApp> GetUserDevAppCheck(int userId);
 
         List<DevApp> GetAllUserDevApp(int userId);
 
-
+        DevApp EmptyDevApp();
     }
 }

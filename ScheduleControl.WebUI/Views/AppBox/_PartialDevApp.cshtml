@@ -1,0 +1,41 @@
+﻿@model List<ScheduleControl.Entities.Models.DevApp>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Url</td>
+            <td>Status</td>
+            <td>#</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Url</td>
+                <td>
+                    @if (item.Status)
+                    {
+                        <input type="checkbox" checked readonly />
+                    }
+                    else
+                    {
+                        <input type="checkbox" disable />
+                    }
+                </td>
+                <td>
+                    <button onclick="GetDevAppById(@item.Id)" class="btn-warning btn-sm btn-circle">Edit</button> &nbsp;&nbsp;
+                    <button onclick="RemoveDevApp(@item.Id)" class="btn-danger btn-sm btn-circle">Remove</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+

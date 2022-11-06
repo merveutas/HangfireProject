@@ -1,5 +1,7 @@
 ﻿using Hangfire;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using ScheduleControl.BackgroundJob.Schedules;
 using ScheduleControl.Business.Abstract.Auth;
@@ -8,6 +10,7 @@ using ScheduleControl.Entities.Dtos.Util;
 using ScheduleControl.Entities.Models;
 using ScheduleControl.WebUI.ViewModels;
 using System;
+using System.Diagnostics.Eventing.Reader;
 
 namespace ScheduleControl.WebUI.Controllers
 {
@@ -38,10 +41,17 @@ namespace ScheduleControl.WebUI.Controllers
         public IActionResult Register(AuthViewModel authViewModel)
         {
             var user = _authService.Register(authViewModel.UserForRegisterDto);
-            DelayedJobs.SendMailRegisterJobs(user.UserId);
-            _logger.LogError("Register başarılı.");
+            if (user != null)
+            {
+                HttpContext.Session.SetInt32("userId", user.UserId);
+                HttpContext.Session.SetString("userEmail", user.Email);
 
-            return RedirectToAction("Index", "Home");
+                DelayedJobs.SendMailRegisterJobs(user.UserId);
+                _logger.LogInformation("Register başarılı.");
+            }
+            else { _logger.LogError("Register başarısız."); }
+
+            return RedirectToAction("Index", "Account");
         }
 
 
@@ -55,8 +65,18 @@ namespace ScheduleControl.WebUI.Controllers
         public IActionResult Login(AuthViewModel authViewModel)
         {
             var user = _authService.Login(authViewModel.UserForLoginDto);
-            _logger.LogError("Login başarılı.");
-            return RedirectToAction("Index", "Home");
+            if (user != null)
+            {
+                HttpContext.Session.SetInt32("userId", user.UserId);
+                HttpContext.Session.SetString("userEmail", user.Email);
+                if (user != null)
+                {
+                    //var id = HttpContext.Session.GetInt32("userId");
+                    _logger.LogInformation("Login başarılı.");
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return RedirectToAction("Index", "Account");
         }
 
         //[HttpGet("UserRegisterCheck")]
@@ -73,5 +93,13 @@ namespace ScheduleControl.WebUI.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("userId");
+            HttpContext.Session.Remove("userEmail");
+
+            return RedirectToAction("Index", "Account");
+        }
+        
     }
 }

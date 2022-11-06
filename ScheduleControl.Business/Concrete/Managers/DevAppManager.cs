@@ -51,5 +51,15 @@ namespace ScheduleControl.Business.Concrete.Managers
         {
             _devAppDal.Update(devApp);
         }
+
+        public bool Delete(DevApp devApp)
+        {
+            return _devAppDal.Delete(devApp);
+        }
+
+        public DevApp EmptyDevApp()
+        {
+            return new DevApp();
+        }
     }
 }

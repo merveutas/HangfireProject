@@ -12,6 +12,7 @@
     <PackageReference Include="NLog" Version="5.0.5" />
   </ItemGroup>
 
+	
   <ItemGroup>
     <ProjectReference Include="..\ScheduleControl.DataAccess\ScheduleControl.DataAccess.csproj" />
   </ItemGroup>

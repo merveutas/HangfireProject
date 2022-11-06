@@ -8,6 +8,7 @@ using System.Diagnostics;
 
 namespace ScheduleControl.WebUI.Controllers
 {
+    [MyValidation]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

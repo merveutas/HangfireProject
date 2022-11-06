@@ -74,7 +74,12 @@ namespace ScheduleControl.WebUI
             
             // configuration configure options
             services.Configure<SmtpConfigDto>(Configuration.GetSection("SmtpConfig"));
-          
+
+            services.AddSession(option =>
+            {
+                //Süre 1 dk olarak belirlendi
+                option.IdleTimeout = TimeSpan.FromMinutes(300);
+            });
 
             services.AddControllersWithViews();
         }
@@ -85,6 +90,7 @@ namespace ScheduleControl.WebUI
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSession();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -94,15 +100,17 @@ namespace ScheduleControl.WebUI
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+           
             app.UseHttpsRedirection();
             app.UseStaticFiles(); 
             app.UseRouting();
             app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Index}/{id?}");
             });
             //app.UseHangfireDashboard();  
             app.UseHangfireDashboard("/merveutashangfire", new DashboardOptions

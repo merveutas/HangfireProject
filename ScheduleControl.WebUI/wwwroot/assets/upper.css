@@ -1,0 +1,34 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,700&subset=latin,latin-ext);
+
+body,.test-pencere,.test-pencere a,.test-relative,.test-sol,.test-sag,.test-orta,.test-ust,.test-alt,.test-mavi{-webkit-transition: all .5s;transition: all .5s;}
+
+
+.test-pencere{position:absolute; z-index:9999; display:table; padding: 10px; border: 1px solid transparent; border-radius: 4px; color: rgba(0,0,0,0.6); font:700 12px 'Open Sans'}
+.test-pencere a:hover{color: black;}
+.test-pencere a{color:inherit; text-decoration:none !important;}
+.test-relative{position:relative;left:auto !important;right:auto !important}
+
+.test-pencere h1{font-size: 20px;font-weight: 400;}
+.test-pencere h2{font-size: 15px;font-weight: 300;}
+.test-pencere h3{margin: 0px 0 5px 0;font-size: 12px;font-weight: 400;text-transform: uppercase;}
+
+.test-sol{left:.4%;}
+.test-sag{right:.4%;min-width:185px;min-height:285px;}
+.test-ust{top:1%;}
+.test-alt{bottom:1%;}
+.test-orta{left:35%; right:35%; width:30%; text-align:center; margin:auto;}
+
+.test-i{color:rgba(255,255,255,0.6);}
+.test-i a:hover{color:white}
+
+.test-mavi{color: #d5d5d5;background-color: #282a3c;border-color: #282a3c;}
+
+@media (max-width:768px){
+body{font-size:80%;}
+.test-pencere{padding: 10px; font-size:10px;}
+.test-pencere h1{font-size: 15px;}
+.test-pencere h2{font-size: 10px;}
+.test-pencere h3{font-size: 10px;}
+.test-sag{right:.2%;min-width:175px;min-height:100px;}
+/*.test-mavi{display:none}*/
+}

@@ -1,0 +1,13 @@
+﻿@media only screen and (max-width: 1480px) {
+    .personelChart {
+        float: left !important;
+    }
+}
+
+@media only screen and (min-width: 1480px) {
+    .personelChart {
+        margin-top: 42px !important;
+        margin-bottom: 37px !important;
+    }
+}
+

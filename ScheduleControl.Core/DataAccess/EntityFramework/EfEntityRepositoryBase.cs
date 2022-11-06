@@ -15,19 +15,21 @@ namespace ScheduleControl.Core.DataAccess.EntityFramework
         {
             using (var context = new TContext())
             {
-                var addedEntity = context.Entry(entity);
-                addedEntity.State = EntityState.Added;
+                //var addedEntity = context.Entry(entity);
+                //addedEntity.State = EntityState.Added;
+                context.Set<TEntity>().Add(entity);
                 context.SaveChanges();
             }
         }
 
-        public void Delete(TEntity entity)
+        public bool Delete(TEntity entity)
         {
             using (var context = new TContext())
             {
-                var deletedEntity = context.Entry(entity);
-                deletedEntity.State = EntityState.Deleted;
+                //var deletedEntity = context.Entry(entity);
+                context.Set<TEntity>().Remove(entity);
                 context.SaveChanges();
+                return true;
             }
         }
 

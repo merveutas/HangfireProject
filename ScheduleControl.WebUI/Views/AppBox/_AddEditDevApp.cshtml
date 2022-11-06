@@ -1,0 +1,71 @@
+﻿@model ScheduleControl.Entities.Models.DevApp
+
+
+
+<form id="InsertUpdateDevApp" enctype="multipart/form-data" onsubmit="return AjaxPostDevApp(this)">
+    <div class="kt-portlet kt-portlet--tabs">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-toolbar">
+                <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-danger nav-tabs-line-2x nav-tabs-line-right" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_2_3_tab_content" role="tab" aria-selected="false">
+                            <i class="la la-briefcase"></i>Dev App
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <a onclick="GetDevAppById(-1)" class="btn btn-danger btn-xs" style="float:right; height:35px; margin-top:12px; color:white;"><i class="fa fa-add"></i>&nbsp;New App</a>
+        </div>
+        <div class="kt-portlet__body">
+            <div class="tab-content">
+                <div class="tab-pane active" id="kt_portlet_base_demo_2_3_tab_content" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input style="display:none;" class="myinput" type="text" id="app_id" name="Id" value="@Model.Id" />
+                            <label>App Name</label>
+                            <input required type="text" class="form-control form-control-sm myinput" name="Name" value="@Model.Name">
+
+                            <label>App Url</label>
+                            <input required type="text" class="form-control form-control-sm myinput" name="Url" value="@Model.Url">
+                        </div>
+                    </div><br />
+                    <div class="row" style="float:right;">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="~/assets/js/pages/components/extended/sweetalert2.js"></script>
+
+<script>
+    function AjaxPostDevApp(formData) {
+        debugger;
+        var ajaxConfig = {
+            type: "post",
+            url: "/AppBox/InsertUpdateDevApp",
+            data: new FormData(formData),
+            success: function (result) {
+                debugger;
+                if (result)
+                    CleanInputs();
+                AlertDialog(result.mesaj_tur, result.mesaj);
+                GetAllDevApp();
+            }
+        }
+        if ($(formData).attr('enctype') == "multipart/form-data") {
+            ajaxConfig["contentType"] = false;
+            ajaxConfig["processData"] = false;
+        }
+        $.ajax(ajaxConfig);
+        return false;
+    }
+
+    function CleanInputs() {
+        $(".myinput").each(function (index) {
+            $(this).val("");
+        });
+    }
+</script>

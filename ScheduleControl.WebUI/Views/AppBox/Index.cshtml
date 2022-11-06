@@ -1,27 +1,96 @@
-﻿@model List<ScheduleControl.Entities.Models.DevApp>
+﻿@{
+    ViewBag.Title = "DevApps";
+}
 
-<table>
-    <thead>
-        <tr>
-            <td>Name</td>
-            <td>Url</td>
-            <td>Status</td>
-            <td>İşlem</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Name</td>
-                <td>@item.Url</td>
-                <td>@item.Status</td>
-                <td>
-                    <button>Ekle</button> &nbsp; | &nbsp;
-                    <button>Sil</button> &nbsp; | &nbsp;
-                    <button>Güncelle</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="kt-portlet myTab">
+    <div class="kt-portlet__body">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a onclick="" class="nav-link active" data-toggle="tab" href="#kt_tabs_1_1">
+                    <span id="tabAraclar"><i class="la la-building"></i></span> DevApps
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="kt_tabs_1_1" role="tabpanel">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__body">
+                        <div class="row">
+                            <div class="col-md-6" id="DevAppPartialDiv">
+                            </div>
+                            <div class="col-md-6" id="DevAppListDiv">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__foot">
+                    </div>
+                    <!--end::Form-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        GetDevAppById(-1);
+        GetAllDevApp();
+    });
+
+    function GetDevAppById(id) {
+        debugger;
+        $.ajax({
+            type: "GET",
+            url: "/AppBox/GetDevAppById",
+            data: { id: id },
+            cache: false,
+            success: function (data) {
+                $('#DevAppPartialDiv').html(data);
+            },
+            error: function (req, status, error) {
+                debugger;
+                alert(req.responseText);
+            }
+        });
+    }
+
+    function GetAllDevApp() {
+        $.ajax({
+            type: "GET",
+            url: "/AppBox/GetAllDevApp",
+            cache: false,
+            success: function (data) {
+                $('#DevAppListDiv').html(data);
+            },
+            error: function (req, status, error) {
+                alert(req.responseText);
+            }
+        });
+    }
+
+    function RemoveDevApp(id) {
+        swal.fire({
+            title: 'Emin misiniz?',
+            text: "Seçilen Kayıt Silinecek!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet!',
+            cancelButtonText: "Hayır, vazgeç!"
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    url: '/AppBox/RemoveDevApp',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (result) {
+                        debugger;
+                        if (result) {
+                            AlertDialog(result.mesaj_tur, result.mesaj);
+                            GetAllDevApp();
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>
