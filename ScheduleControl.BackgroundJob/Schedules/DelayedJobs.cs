@@ -3,10 +3,6 @@ using System;
 
 namespace ScheduleControl.BackgroundJob.Schedules
 {
-    /// <summary>
-    /// Oluşturulduktan belirli bir (ayarlanan) zaman sonra  
-    /// sadece tek seferliğine çalışan job türüdür.
-    /// </summary>
     public static class DelayedJobs
     {
         [Obsolete]

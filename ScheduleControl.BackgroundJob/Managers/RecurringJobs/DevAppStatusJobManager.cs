@@ -41,7 +41,6 @@ namespace ScheduleControl.BackgroundJob.Managers.RecurringJobs
                             item.ModifyDate = DateTime.Now;
                             item.Status = true;
                             _devAppService.Update(item);
-                            //Log atılacak başarılı diye.
                         }
                         else
                         {
@@ -49,7 +48,6 @@ namespace ScheduleControl.BackgroundJob.Managers.RecurringJobs
                             item.Status = false;
                             item.ModifyDate = DateTime.Now;
                             _devAppService.Update(item);
-                            //log atılacak reguest başarısız diye.
                         }
                     }
                     catch(Exception ex)
@@ -58,7 +56,6 @@ namespace ScheduleControl.BackgroundJob.Managers.RecurringJobs
                         item.Status = false;
                         item.ModifyDate = DateTime.Now;
                         _devAppService.Update(item);
-                        //log atılacak reguest başarısız diye.
                     }
 
                 }

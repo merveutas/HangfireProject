@@ -6,7 +6,6 @@
         {
             Admin,
             User,
-            WebMaster,
             HangfireOpenUser
         }
     }

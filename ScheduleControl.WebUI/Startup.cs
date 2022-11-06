@@ -125,17 +125,14 @@ namespace ScheduleControl.WebUI
                 /*  Hangfire Server, planlanan işleri sıralarına göre sıralamak için zamanlamayı düzenli olarak denetler ve 
                     çalışanların bunları yürütmesine olanak tanır. 
                     Varsayılan olarak, kontrol aralığı 15 saniyeye eşittir, ancak BackgroundJobServer yapıcısına ilettiğiniz seçeneklerde 
-                    SchedulePollingInterval özelliğini ayarlayarak değiştirebilirsiniz    */
+                    SchedulePollingInterval özelliğini ayarlayarak değiştirebiliriz    */
                 SchedulePollingInterval = TimeSpan.FromSeconds(30),
 
                 //Arkaplanda çalışacak Job sayısını değiştirebiliriz.
                 WorkerCount = Environment.ProcessorCount *3 
             });
 
-            GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute { Attempts = 10 });
-
-            // Tanımlanan zaman diliminde sürekli çalıştığı için tetiklenmesine gerek yok, 
-            // burada tanımlayabiliriz. tanımlayabiliriz.  
+            GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute { Attempts = 10 });  
 
             RecurringJobs.AppListenCheckOperation();  //istek atma
             RecurringJobs.AppStatusCheckOperation();  //mail gönderme
